@@ -1,15 +1,16 @@
 import Constants from "../../constants";
-export class MovementAction {
-  static async findMovement(payload) {
-    return { type: Constants.ACTIONS.FIND_MOVEMENT, payload };
-  }
-  static async createMovement(payload) {
+console.log("movement actions location")
+export default class MovementAction {
+  static createMovement(payload) {
     return { type: Constants.ACTIONS.CREATE_MOVEMENT, payload };
   }
-  static async updateMovement(payload) {
+  static updateMovement(payload) {
     return { type: Constants.ACTIONS.UPDATE_MOVEMENT, payload };
   }
-  static async listMovements(payload) {
-    return { type: Constants.ACTIONS.LIST_MOVEMENT_S, payload };
+  static selectMovement(payload) {
+    return { type: Constants.ACTIONS.SELECT_MOVEMENT, payload };
+  }
+  static listMovements(payload) {
+    return { type: Constants.ACTIONS.LIST_MOVEMENTS, payload };
   }
 }

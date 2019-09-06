@@ -1,45 +1,63 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("movement detail reducer location")
 export default class MovementDetailReducer {
-  static actions = [Constants.ACTIONS.FIND_MOVEMENT_DETAIL, Constants.ACTIONS.CREATE_MOVEMENT_DETAIL, Constants.ACTIONS.UPDATE_MOVEMENT_DETAIL, Constants.ACTIONS.LIST_MOVEMENT_DETAIL_S];
+  static actions = [
+    Constants.ACTIONS.CREATE_MOVEMENT_DETAIL,
+    Constants.ACTIONS.UPDATE_MOVEMENT_DETAIL,
+    Constants.ACTIONS.SELECT_MOVEMENT_DETAIL,
+    Constants.ACTIONS.LIST_MOVEMENT_DETAILS
+  ];
   static isValidAction(action) {
     return MovementDetailReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createMovementDetail(state, payload) {
+    if (!payload || !payload.id)
+      return {};
+    const entityList = state["movementDetails"] || [];
+    entityList.push(payload);
+    return { movementDetails: entityList };
+  }
+  static updateMovementDetail(state, payload) {
+    const entity = state["movementDetails"].find(entity => entity.id === payload.id)
+    Object.assign(entity || {}, payload)
+    return state;
+  }
+  static selectMovementDetail(state, payload) {
+    const [pluralKey, individualKey] = ["movementDetails","movementDetail"]
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) ||
+          {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) ||
+        {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findMovementDetail(payload) {
-    return { movementDetail: await InventoryClient.movementDetail.findMovementDetail(payload).then(MovementDetailReducer.getResponse) };
+  static listMovementDetails(state, payload) {
+    if (!payload || !payload.length)
+      return { movementDetails: [] };
+    return { movementDetails: payload };
   }
-  static async createMovementDetail(payload) {
-    return { movementDetail: await InventoryClient.movementDetail.createMovementDetail(payload).then(MovementDetailReducer.getResponse) };
-  }
-  static async updateMovementDetail(payload) {
-    return { movementDetail: await InventoryClient.movementDetail.updateMovementDetail(payload.id, payload.movementDetail).then(MovementDetailReducer.getResponse) };
-  }
-  static async listMovementDetails(payload) {
-    return { movementDetails: await InventoryClient.movementDetail.listMovementDetails(payload).then(MovementDetailReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_MOVEMENT_DETAIL:
-        newState = await MovementDetailReducer.findMovementDetail(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_MOVEMENT_DETAIL:
-        newState = await MovementDetailReducer.createMovementDetail(action.payload);
+        newState = MovementDetailReducer.createMovementDetail(state, action.payload);
         break;
       case Constants.ACTIONS.UPDATE_MOVEMENT_DETAIL:
-        newState = await MovementDetailReducer.updateMovementDetail(action.payload);
+        newState = MovementDetailReducer.updateMovementDetail(state, action.payload);
         break;
-      case Constants.ACTIONS.LIST_MOVEMENT_DETAIL:
-        newState = await MovementDetailReducer.listMovementDetails(action.payload);
+      case Constants.ACTIONS.SELECT_MOVEMENT_DETAIL:
+        newState = MovementDetailReducer.selectMovementDetail(state, action.payload);
+        break;
+      case Constants.ACTIONS.LIST_MOVEMENT_DETAILS:
+        newState = MovementDetailReducer.listMovementDetails(state, action.payload);
         break;
       default:
         break;

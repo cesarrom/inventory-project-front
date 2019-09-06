@@ -86,7 +86,7 @@ export class RequiredError extends Error {
  * @export
  * @interface CategoryDto
  */
-export interface CategoryDto {
+export class CategoryDto {
     /**
      * 
      * @type {Date}
@@ -148,7 +148,7 @@ export interface CategoryDto {
  * @export
  * @interface CustomerDto
  */
-export interface CustomerDto {
+export class CustomerDto {
     /**
      * 
      * @type {string}
@@ -210,7 +210,7 @@ export interface CustomerDto {
  * @export
  * @interface MovementDetailDto
  */
-export interface MovementDetailDto {
+export class MovementDetailDto {
     /**
      * 
      * @type {Date}
@@ -272,7 +272,7 @@ export interface MovementDetailDto {
  * @export
  * @interface MovementDto
  */
-export interface MovementDto {
+export class MovementDto {
     /**
      * 
      * @type {Array<MovementDto>}
@@ -364,7 +364,7 @@ export interface MovementDto {
  * @export
  * @interface MovementTypeDto
  */
-export interface MovementTypeDto {
+export class MovementTypeDto {
     /**
      * 
      * @type {Date}
@@ -426,7 +426,7 @@ export interface MovementTypeDto {
  * @export
  * @interface ProductDto
  */
-export interface ProductDto {
+export class ProductDto {
     /**
      * 
      * @type {CategoryDto}
@@ -506,7 +506,7 @@ export interface ProductDto {
  * @export
  * @interface ProductRepositoryDto
  */
-export interface ProductRepositoryDto {
+export class ProductRepositoryDto {
     /**
      * 
      * @type {Date}
@@ -568,7 +568,7 @@ export interface ProductRepositoryDto {
  * @export
  * @interface RepositoryDto
  */
-export interface RepositoryDto {
+export class RepositoryDto {
     /**
      * 
      * @type {Date}
@@ -630,7 +630,7 @@ export interface RepositoryDto {
  * @export
  * @interface ResponseCanonicalCategoryDto
  */
-export interface ResponseCanonicalCategoryDto {
+export class ResponseCanonicalCategoryDto {
     /**
      * 
      * @type {CategoryDto}
@@ -650,7 +650,7 @@ export interface ResponseCanonicalCategoryDto {
  * @export
  * @interface ResponseCanonicalCustomerDto
  */
-export interface ResponseCanonicalCustomerDto {
+export class ResponseCanonicalCustomerDto {
     /**
      * 
      * @type {CustomerDto}
@@ -670,7 +670,7 @@ export interface ResponseCanonicalCustomerDto {
  * @export
  * @interface ResponseCanonicalListCategoryDto
  */
-export interface ResponseCanonicalListCategoryDto {
+export class ResponseCanonicalListCategoryDto {
     /**
      * 
      * @type {Array<CategoryDto>}
@@ -690,7 +690,7 @@ export interface ResponseCanonicalListCategoryDto {
  * @export
  * @interface ResponseCanonicalListCustomerDto
  */
-export interface ResponseCanonicalListCustomerDto {
+export class ResponseCanonicalListCustomerDto {
     /**
      * 
      * @type {Array<CustomerDto>}
@@ -710,7 +710,7 @@ export interface ResponseCanonicalListCustomerDto {
  * @export
  * @interface ResponseCanonicalListMovementDetailDto
  */
-export interface ResponseCanonicalListMovementDetailDto {
+export class ResponseCanonicalListMovementDetailDto {
     /**
      * 
      * @type {Array<MovementDetailDto>}
@@ -730,7 +730,7 @@ export interface ResponseCanonicalListMovementDetailDto {
  * @export
  * @interface ResponseCanonicalListMovementDto
  */
-export interface ResponseCanonicalListMovementDto {
+export class ResponseCanonicalListMovementDto {
     /**
      * 
      * @type {Array<MovementDto>}
@@ -750,7 +750,7 @@ export interface ResponseCanonicalListMovementDto {
  * @export
  * @interface ResponseCanonicalListMovementTypeDto
  */
-export interface ResponseCanonicalListMovementTypeDto {
+export class ResponseCanonicalListMovementTypeDto {
     /**
      * 
      * @type {Array<MovementTypeDto>}
@@ -770,7 +770,7 @@ export interface ResponseCanonicalListMovementTypeDto {
  * @export
  * @interface ResponseCanonicalListProductDto
  */
-export interface ResponseCanonicalListProductDto {
+export class ResponseCanonicalListProductDto {
     /**
      * 
      * @type {Array<ProductDto>}
@@ -790,7 +790,7 @@ export interface ResponseCanonicalListProductDto {
  * @export
  * @interface ResponseCanonicalListProductRepositoryDto
  */
-export interface ResponseCanonicalListProductRepositoryDto {
+export class ResponseCanonicalListProductRepositoryDto {
     /**
      * 
      * @type {Array<ProductRepositoryDto>}
@@ -810,7 +810,7 @@ export interface ResponseCanonicalListProductRepositoryDto {
  * @export
  * @interface ResponseCanonicalListRepositoryDto
  */
-export interface ResponseCanonicalListRepositoryDto {
+export class ResponseCanonicalListRepositoryDto {
     /**
      * 
      * @type {Array<RepositoryDto>}
@@ -830,7 +830,7 @@ export interface ResponseCanonicalListRepositoryDto {
  * @export
  * @interface ResponseCanonicalListSupplierDto
  */
-export interface ResponseCanonicalListSupplierDto {
+export class ResponseCanonicalListSupplierDto {
     /**
      * 
      * @type {Array<SupplierDto>}
@@ -850,7 +850,7 @@ export interface ResponseCanonicalListSupplierDto {
  * @export
  * @interface ResponseCanonicalMovementDetailDto
  */
-export interface ResponseCanonicalMovementDetailDto {
+export class ResponseCanonicalMovementDetailDto {
     /**
      * 
      * @type {MovementDetailDto}
@@ -870,7 +870,7 @@ export interface ResponseCanonicalMovementDetailDto {
  * @export
  * @interface ResponseCanonicalMovementDto
  */
-export interface ResponseCanonicalMovementDto {
+export class ResponseCanonicalMovementDto {
     /**
      * 
      * @type {MovementDto}
@@ -890,7 +890,7 @@ export interface ResponseCanonicalMovementDto {
  * @export
  * @interface ResponseCanonicalMovementTypeDto
  */
-export interface ResponseCanonicalMovementTypeDto {
+export class ResponseCanonicalMovementTypeDto {
     /**
      * 
      * @type {MovementTypeDto}
@@ -910,7 +910,7 @@ export interface ResponseCanonicalMovementTypeDto {
  * @export
  * @interface ResponseCanonicalProductDto
  */
-export interface ResponseCanonicalProductDto {
+export class ResponseCanonicalProductDto {
     /**
      * 
      * @type {ProductDto}
@@ -930,7 +930,7 @@ export interface ResponseCanonicalProductDto {
  * @export
  * @interface ResponseCanonicalProductRepositoryDto
  */
-export interface ResponseCanonicalProductRepositoryDto {
+export class ResponseCanonicalProductRepositoryDto {
     /**
      * 
      * @type {ProductRepositoryDto}
@@ -950,7 +950,7 @@ export interface ResponseCanonicalProductRepositoryDto {
  * @export
  * @interface ResponseCanonicalRepositoryDto
  */
-export interface ResponseCanonicalRepositoryDto {
+export class ResponseCanonicalRepositoryDto {
     /**
      * 
      * @type {RepositoryDto}
@@ -970,7 +970,7 @@ export interface ResponseCanonicalRepositoryDto {
  * @export
  * @interface ResponseCanonicalSupplierDto
  */
-export interface ResponseCanonicalSupplierDto {
+export class ResponseCanonicalSupplierDto {
     /**
      * 
      * @type {SupplierDto}
@@ -1010,7 +1010,7 @@ export interface ResponseCanonicalstring {
  * @export
  * @interface SupplierDto
  */
-export interface SupplierDto {
+export class SupplierDto {
     /**
      * 
      * @type {string}

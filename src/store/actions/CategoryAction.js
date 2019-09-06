@@ -1,15 +1,16 @@
 import Constants from "../../constants";
-export class CategoryAction {
-  static async findCategory(payload) {
-    return { type: Constants.ACTIONS.FIND_CATEGORY, payload };
-  }
-  static async createCategory(payload) {
+console.log("category actions location")
+export default class CategoryAction {
+  static createCategory(payload) {
     return { type: Constants.ACTIONS.CREATE_CATEGORY, payload };
   }
-  static async updateCategory(payload) {
+  static updateCategory(payload) {
     return { type: Constants.ACTIONS.UPDATE_CATEGORY, payload };
   }
-  static async listCategories(payload) {
+  static selectCategory(payload) {
+    return { type: Constants.ACTIONS.SELECT_CATEGORY, payload };
+  }
+  static listCategories(payload) {
     return { type: Constants.ACTIONS.LIST_CATEGORIES, payload };
   }
 }

@@ -7,6 +7,7 @@ import ProductReducer from "./ProductReducer";
 import ProductRepositoryReducer from "./ProductRepositoryReducer";
 import RepositoryReducer from "./RepositoryReducer";
 import SupplierReducer from "./SupplierReducer";
+import RootReducer from "./RootReducer";
 
 const Reducers = {
   CategoryReducer: CategoryReducer,
@@ -17,7 +18,8 @@ const Reducers = {
   ProductReducer: ProductReducer,
   ProductRepositoryReducer: ProductRepositoryReducer,
   RepositoryReducer: RepositoryReducer,
-  SupplierReducer: SupplierReducer
+  SupplierReducer: SupplierReducer,
+  RootReducer: RootReducer
 }
 
 export default Reducers;

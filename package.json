@@ -9,6 +9,7 @@
     "grommet-icons": "^4.3.0",
     "inventory-api": "./external_libs/clients/typescript-fetch",
     "jquery": "^3.4.1",
+    "lodash": "^4.17.15",
     "popper.js": "^1.15.0",
     "portable-fetch": "^3.0.0",
     "react": "^16.9.0",

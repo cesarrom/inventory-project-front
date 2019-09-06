@@ -1,45 +1,63 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("movement reducer location")
 export default class MovementReducer {
-  static actions = [Constants.ACTIONS.FIND_MOVEMENT, Constants.ACTIONS.CREATE_MOVEMENT, Constants.ACTIONS.UPDATE_MOVEMENT, Constants.ACTIONS.LIST_MOVEMENT_S];
+  static actions = [
+    Constants.ACTIONS.CREATE_MOVEMENT,
+    Constants.ACTIONS.UPDATE_MOVEMENT,
+    Constants.ACTIONS.SELECT_MOVEMENT,
+    Constants.ACTIONS.LIST_MOVEMENTS
+  ];
   static isValidAction(action) {
     return MovementReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createMovement(state, payload) {
+    if (!payload || !payload.id)
+      return {};
+    const entityList = state["movements"] || [];
+    entityList.push(payload);
+    return { movements: entityList };
+  }
+  static updateMovement(state, payload) {
+    const entity = state["movements"].find(entity => entity.id === payload.id)
+    Object.assign(entity || {}, payload)
+    return state;
+  }
+  static selectMovement(state, payload) {
+    const [pluralKey, individualKey] = ["movements","movement"]
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) ||
+          {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) ||
+        {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findMovement(payload) {
-    return { movement: await InventoryClient.movement.findMovement(payload).then(MovementReducer.getResponse) };
+  static listMovements(state, payload) {
+    if (!payload || !payload.length)
+      return { movements: [] };
+    return { movements: payload };
   }
-  static async createMovement(payload) {
-    return { movement: await InventoryClient.movement.createMovement(payload).then(MovementReducer.getResponse) };
-  }
-  static async updateMovement(payload) {
-    return { movement: await InventoryClient.movement.updateMovement(payload.id, payload.movement).then(MovementReducer.getResponse) };
-  }
-  static async listMovements(payload) {
-    return { movements: await InventoryClient.movement.listMovements(payload).then(MovementReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_MOVEMENT:
-        newState = await MovementReducer.findMovement(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_MOVEMENT:
-        newState = await MovementReducer.createMovement(action.payload);
+        newState = MovementReducer.createMovement(state, action.payload);
         break;
       case Constants.ACTIONS.UPDATE_MOVEMENT:
-        newState = await MovementReducer.updateMovement(action.payload);
+        newState = MovementReducer.updateMovement(state, action.payload);
         break;
-      case Constants.ACTIONS.LIST_MOVEMENT:
-        newState = await MovementReducer.listMovements(action.payload);
+      case Constants.ACTIONS.SELECT_MOVEMENT:
+        newState = MovementReducer.selectMovement(state, action.payload);
+        break;
+      case Constants.ACTIONS.LIST_MOVEMENTS:
+        newState = MovementReducer.listMovements(state, action.payload);
         break;
       default:
         break;

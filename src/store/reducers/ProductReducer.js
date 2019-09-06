@@ -1,45 +1,63 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("product Reducer Location")
 export default class ProductReducer {
-  static actions = [Constants.ACTIONS.FIND_PRODUCT, Constants.ACTIONS.CREATE_PRODUCT, Constants.ACTIONS.UPDATE_PRODUCT, Constants.ACTIONS.LIST_PRODUCT_S];
+  static actions = [
+    Constants.ACTIONS.CREATE_PRODUCT,
+    Constants.ACTIONS.UPDATE_PRODUCT,
+    Constants.ACTIONS.SELECT_PRODUCT,
+    Constants.ACTIONS.LIST_PRODUCTS
+  ];
   static isValidAction(action) {
     return ProductReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createProduct(state, payload) {
+    if (!payload || !payload.id)
+      return {};
+    const entityList = state["products"] || [];
+    entityList.push(payload);
+    return { products: entityList };
+  }
+  static updateProduct(state, payload) {
+    const entity = state["products"].find(entity => entity.id === payload.id)
+    Object.assign(entity || {}, payload)
+    return state;
+  }
+  static selectProduct(state, payload) {
+    const [pluralKey, individualKey] = ["products","product"]
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) ||
+          {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) ||
+        {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findProduct(payload) {
-    return { product: await InventoryClient.product.findProduct(payload).then(ProductReducer.getResponse) };
+  static listProducts(state, payload) {
+    if (!payload || !payload.length)
+      return { products: [] };
+    return { products: payload };
   }
-  static async createProduct(payload) {
-    return { product: await InventoryClient.product.createProduct(payload).then(ProductReducer.getResponse) };
-  }
-  static async updateProduct(payload) {
-    return { product: await InventoryClient.product.updateProduct(payload.id, payload.product).then(ProductReducer.getResponse) };
-  }
-  static async listProducts(payload) {
-    return { products: await InventoryClient.product.listProducts(payload).then(ProductReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_PRODUCT:
-        newState = await ProductReducer.findProduct(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_PRODUCT:
-        newState = await ProductReducer.createProduct(action.payload);
+        newState = ProductReducer.createProduct(state, action.payload);
         break;
       case Constants.ACTIONS.UPDATE_PRODUCT:
-        newState = await ProductReducer.updateProduct(action.payload);
+        newState = ProductReducer.updateProduct(state, action.payload);
         break;
-      case Constants.ACTIONS.LIST_PRODUCT:
-        newState = await ProductReducer.listProducts(action.payload);
+      case Constants.ACTIONS.SELECT_PRODUCT:
+        newState = ProductReducer.selectProduct(state, action.payload);
+        break;
+      case Constants.ACTIONS.LIST_PRODUCTS:
+        newState = ProductReducer.listProducts(state, action.payload);
         break;
       default:
         break;

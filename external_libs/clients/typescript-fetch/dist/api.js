@@ -13,9 +13,12 @@
  * Do not edit the class manually.
  */
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -77,6 +80,303 @@ var RequiredError = /** @class */ (function (_super) {
     return RequiredError;
 }(Error));
 exports.RequiredError = RequiredError;
+/**
+ *
+ * @export
+ * @interface CategoryDto
+ */
+var CategoryDto = /** @class */ (function () {
+    function CategoryDto() {
+    }
+    return CategoryDto;
+}());
+exports.CategoryDto = CategoryDto;
+/**
+ *
+ * @export
+ * @interface CustomerDto
+ */
+var CustomerDto = /** @class */ (function () {
+    function CustomerDto() {
+    }
+    return CustomerDto;
+}());
+exports.CustomerDto = CustomerDto;
+/**
+ *
+ * @export
+ * @interface MovementDetailDto
+ */
+var MovementDetailDto = /** @class */ (function () {
+    function MovementDetailDto() {
+    }
+    return MovementDetailDto;
+}());
+exports.MovementDetailDto = MovementDetailDto;
+/**
+ *
+ * @export
+ * @interface MovementDto
+ */
+var MovementDto = /** @class */ (function () {
+    function MovementDto() {
+    }
+    return MovementDto;
+}());
+exports.MovementDto = MovementDto;
+/**
+ *
+ * @export
+ * @interface MovementTypeDto
+ */
+var MovementTypeDto = /** @class */ (function () {
+    function MovementTypeDto() {
+    }
+    return MovementTypeDto;
+}());
+exports.MovementTypeDto = MovementTypeDto;
+/**
+ *
+ * @export
+ * @interface ProductDto
+ */
+var ProductDto = /** @class */ (function () {
+    function ProductDto() {
+    }
+    return ProductDto;
+}());
+exports.ProductDto = ProductDto;
+/**
+ *
+ * @export
+ * @interface ProductRepositoryDto
+ */
+var ProductRepositoryDto = /** @class */ (function () {
+    function ProductRepositoryDto() {
+    }
+    return ProductRepositoryDto;
+}());
+exports.ProductRepositoryDto = ProductRepositoryDto;
+/**
+ *
+ * @export
+ * @interface RepositoryDto
+ */
+var RepositoryDto = /** @class */ (function () {
+    function RepositoryDto() {
+    }
+    return RepositoryDto;
+}());
+exports.RepositoryDto = RepositoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalCategoryDto
+ */
+var ResponseCanonicalCategoryDto = /** @class */ (function () {
+    function ResponseCanonicalCategoryDto() {
+    }
+    return ResponseCanonicalCategoryDto;
+}());
+exports.ResponseCanonicalCategoryDto = ResponseCanonicalCategoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalCustomerDto
+ */
+var ResponseCanonicalCustomerDto = /** @class */ (function () {
+    function ResponseCanonicalCustomerDto() {
+    }
+    return ResponseCanonicalCustomerDto;
+}());
+exports.ResponseCanonicalCustomerDto = ResponseCanonicalCustomerDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListCategoryDto
+ */
+var ResponseCanonicalListCategoryDto = /** @class */ (function () {
+    function ResponseCanonicalListCategoryDto() {
+    }
+    return ResponseCanonicalListCategoryDto;
+}());
+exports.ResponseCanonicalListCategoryDto = ResponseCanonicalListCategoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListCustomerDto
+ */
+var ResponseCanonicalListCustomerDto = /** @class */ (function () {
+    function ResponseCanonicalListCustomerDto() {
+    }
+    return ResponseCanonicalListCustomerDto;
+}());
+exports.ResponseCanonicalListCustomerDto = ResponseCanonicalListCustomerDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListMovementDetailDto
+ */
+var ResponseCanonicalListMovementDetailDto = /** @class */ (function () {
+    function ResponseCanonicalListMovementDetailDto() {
+    }
+    return ResponseCanonicalListMovementDetailDto;
+}());
+exports.ResponseCanonicalListMovementDetailDto = ResponseCanonicalListMovementDetailDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListMovementDto
+ */
+var ResponseCanonicalListMovementDto = /** @class */ (function () {
+    function ResponseCanonicalListMovementDto() {
+    }
+    return ResponseCanonicalListMovementDto;
+}());
+exports.ResponseCanonicalListMovementDto = ResponseCanonicalListMovementDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListMovementTypeDto
+ */
+var ResponseCanonicalListMovementTypeDto = /** @class */ (function () {
+    function ResponseCanonicalListMovementTypeDto() {
+    }
+    return ResponseCanonicalListMovementTypeDto;
+}());
+exports.ResponseCanonicalListMovementTypeDto = ResponseCanonicalListMovementTypeDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListProductDto
+ */
+var ResponseCanonicalListProductDto = /** @class */ (function () {
+    function ResponseCanonicalListProductDto() {
+    }
+    return ResponseCanonicalListProductDto;
+}());
+exports.ResponseCanonicalListProductDto = ResponseCanonicalListProductDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListProductRepositoryDto
+ */
+var ResponseCanonicalListProductRepositoryDto = /** @class */ (function () {
+    function ResponseCanonicalListProductRepositoryDto() {
+    }
+    return ResponseCanonicalListProductRepositoryDto;
+}());
+exports.ResponseCanonicalListProductRepositoryDto = ResponseCanonicalListProductRepositoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListRepositoryDto
+ */
+var ResponseCanonicalListRepositoryDto = /** @class */ (function () {
+    function ResponseCanonicalListRepositoryDto() {
+    }
+    return ResponseCanonicalListRepositoryDto;
+}());
+exports.ResponseCanonicalListRepositoryDto = ResponseCanonicalListRepositoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalListSupplierDto
+ */
+var ResponseCanonicalListSupplierDto = /** @class */ (function () {
+    function ResponseCanonicalListSupplierDto() {
+    }
+    return ResponseCanonicalListSupplierDto;
+}());
+exports.ResponseCanonicalListSupplierDto = ResponseCanonicalListSupplierDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalMovementDetailDto
+ */
+var ResponseCanonicalMovementDetailDto = /** @class */ (function () {
+    function ResponseCanonicalMovementDetailDto() {
+    }
+    return ResponseCanonicalMovementDetailDto;
+}());
+exports.ResponseCanonicalMovementDetailDto = ResponseCanonicalMovementDetailDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalMovementDto
+ */
+var ResponseCanonicalMovementDto = /** @class */ (function () {
+    function ResponseCanonicalMovementDto() {
+    }
+    return ResponseCanonicalMovementDto;
+}());
+exports.ResponseCanonicalMovementDto = ResponseCanonicalMovementDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalMovementTypeDto
+ */
+var ResponseCanonicalMovementTypeDto = /** @class */ (function () {
+    function ResponseCanonicalMovementTypeDto() {
+    }
+    return ResponseCanonicalMovementTypeDto;
+}());
+exports.ResponseCanonicalMovementTypeDto = ResponseCanonicalMovementTypeDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalProductDto
+ */
+var ResponseCanonicalProductDto = /** @class */ (function () {
+    function ResponseCanonicalProductDto() {
+    }
+    return ResponseCanonicalProductDto;
+}());
+exports.ResponseCanonicalProductDto = ResponseCanonicalProductDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalProductRepositoryDto
+ */
+var ResponseCanonicalProductRepositoryDto = /** @class */ (function () {
+    function ResponseCanonicalProductRepositoryDto() {
+    }
+    return ResponseCanonicalProductRepositoryDto;
+}());
+exports.ResponseCanonicalProductRepositoryDto = ResponseCanonicalProductRepositoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalRepositoryDto
+ */
+var ResponseCanonicalRepositoryDto = /** @class */ (function () {
+    function ResponseCanonicalRepositoryDto() {
+    }
+    return ResponseCanonicalRepositoryDto;
+}());
+exports.ResponseCanonicalRepositoryDto = ResponseCanonicalRepositoryDto;
+/**
+ *
+ * @export
+ * @interface ResponseCanonicalSupplierDto
+ */
+var ResponseCanonicalSupplierDto = /** @class */ (function () {
+    function ResponseCanonicalSupplierDto() {
+    }
+    return ResponseCanonicalSupplierDto;
+}());
+exports.ResponseCanonicalSupplierDto = ResponseCanonicalSupplierDto;
+/**
+ *
+ * @export
+ * @interface SupplierDto
+ */
+var SupplierDto = /** @class */ (function () {
+    function SupplierDto() {
+    }
+    return SupplierDto;
+}());
+exports.SupplierDto = SupplierDto;
 /**
  * CategoryControllerApi - fetch parameter creator
  * @export

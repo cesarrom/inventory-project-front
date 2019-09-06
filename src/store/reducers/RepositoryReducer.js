@@ -1,45 +1,64 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("repository reducer location")
 export default class RepositoryReducer {
-  static actions = [Constants.ACTIONS.FIND_REPOSITORY, Constants.ACTIONS.CREATE_REPOSITORY, Constants.ACTIONS.UPDATE_REPOSITORY, Constants.ACTIONS.LIST_REPOSITORIES];
+  static actions = [
+    Constants.ACTIONS.CREATE_REPOSITORY,
+    Constants.ACTIONS.UPDATE_REPOSITORY,
+    Constants.ACTIONS.SELECT_REPOSITORY,
+    Constants.ACTIONS.LIST_REPOSITORIES
+  ];
   static isValidAction(action) {
     return RepositoryReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createRepository(state, payload) {
+    if (!payload || !payload.id)
+      return {};
+    const entityList = state["repositories"] || [];
+    entityList.push(payload);
+    return { repositories: entityList };
+  }
+  static updateRepository(state, payload) {
+    const entity = state["repositories"].find(entity => entity.id === payload.id)
+    Object.assign(entity || {}, payload)
+    return state;
+  }
+  static selectRepository(state, payload) {
+    const [pluralKey, individualKey] = [
+      "repositories",
+      "repository"
+    ];
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) || {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) || {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findRepository(payload) {
-    return { repository: await InventoryClient.repository.findRepository(payload).then(RepositoryReducer.getResponse) };
+  static listRepositories(state, payload) {
+    if (!payload || !payload.length)
+      return { repositories: [] };
+    return { repositories: payload };
   }
-  static async createRepository(payload) {
-    return { repository: await InventoryClient.repository.createRepository(payload).then(RepositoryReducer.getResponse) };
-  }
-  static async updateRepository(payload) {
-    return { repository: await InventoryClient.repository.updateRepository(payload.id, payload.repository).then(RepositoryReducer.getResponse) };
-  }
-  static async listRepositories(payload) {
-    return { repositories: await InventoryClient.repository.listRepositories(payload).then(RepositoryReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_REPOSITORY:
-        newState = await RepositoryReducer.findRepository(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_REPOSITORY:
-        newState = await RepositoryReducer.createRepository(action.payload);
+        newState = RepositoryReducer.createRepository(state, action.payload);
         break;
       case Constants.ACTIONS.UPDATE_REPOSITORY:
-        newState = await RepositoryReducer.updateRepository(action.payload);
+        newState = RepositoryReducer.updateRepository(state, action.payload);
         break;
-      case Constants.ACTIONS.LIST_REPOSITORY:
-        newState = await RepositoryReducer.listRepositories(action.payload);
+      case Constants.ACTIONS.SELECT_REPOSITORY:
+        newState = RepositoryReducer.selectRepository(state, action.payload);
+        break;
+      case Constants.ACTIONS.LIST_REPOSITORIES:
+        newState = RepositoryReducer.listRepositories(state, action.payload);
         break;
       default:
         break;

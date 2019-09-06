@@ -1,45 +1,76 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("product repository reducer location")
 export default class ProductRepositoryReducer {
-  static actions = [Constants.ACTIONS.FIND_PRODUCT_REPOSITORY, Constants.ACTIONS.CREATE_PRODUCT_REPOSITORY, Constants.ACTIONS.UPDATE_PRODUCT_REPOSITORY, Constants.ACTIONS.LIST_PRODUCT_REPOSITORIES];
+  static actions = [
+    Constants.ACTIONS.CREATE_PRODUCT_REPOSITORY,
+    Constants.ACTIONS.UPDATE_PRODUCT_REPOSITORY,
+    Constants.ACTIONS.SELECT_PRODUCT_REPOSITORY,
+    Constants.ACTIONS.LIST_PRODUCT_REPOSITORIES
+  ];
   static isValidAction(action) {
     return ProductRepositoryReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createProductRepository(state, payload) {
+    if (!payload || !payload.id) return {};
+    const entityList = state["productRepositories"] || [];
+    entityList.push(payload);
+    return { productRepositories: entityList };
+  }
+  static updateProductRepository(state, payload) {
+    const entity = state["productRepositories"].find(
+      entity => entity.id === payload.id
+    );
+    Object.assign(entity || {}, payload);
+    return state;
+  }
+  static selectProductRepository(state, payload) {
+    const [pluralKey, individualKey] = [
+      "productRepositories",
+      "productRepository"
+    ];
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) || {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) || {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findProductRepository(payload) {
-    return { productRepository: await InventoryClient.productRepository.findProductRepository(payload).then(ProductRepositoryReducer.getResponse) };
+  static listProductRepositories(state, payload) {
+    if (!payload || !payload.length) return { productRepositories: [] };
+    return { productRepositories: payload };
   }
-  static async createProductRepository(payload) {
-    return { productRepository: await InventoryClient.productRepository.createProductRepository(payload).then(ProductRepositoryReducer.getResponse) };
-  }
-  static async updateProductRepository(payload) {
-    return { productRepository: await InventoryClient.productRepository.updateProductRepository(payload.id, payload.productRepository).then(ProductRepositoryReducer.getResponse) };
-  }
-  static async listProductRepositories(payload) {
-    return { productRepositories: await InventoryClient.productRepository.listProductRepositories(payload).then(ProductRepositoryReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_PRODUCT_REPOSITORY:
-        newState = await ProductRepositoryReducer.findProductRepository(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_PRODUCT_REPOSITORY:
-        newState = await ProductRepositoryReducer.createProductRepository(action.payload);
+        newState = ProductRepositoryReducer.createProductRepository(
+          state,
+          action.payload
+        );
         break;
       case Constants.ACTIONS.UPDATE_PRODUCT_REPOSITORY:
-        newState = await ProductRepositoryReducer.updateProductRepository(action.payload);
+        newState = ProductRepositoryReducer.updateProductRepository(
+          state,
+          action.payload
+        );
         break;
-      case Constants.ACTIONS.LIST_PRODUCT_REPOSITORY:
-        newState = await ProductRepositoryReducer.listProductRepositories(action.payload);
+      case Constants.ACTIONS.SELECT_PRODUCT_REPOSITORY:
+        newState = ProductRepositoryReducer.selectProductRepository(
+          state,
+          action.payload
+        );
+        break;
+      case Constants.ACTIONS.LIST_PRODUCT_REPOSITORIES:
+        newState = ProductRepositoryReducer.listProductRepositories(
+          state,
+          action.payload
+        );
         break;
       default:
         break;

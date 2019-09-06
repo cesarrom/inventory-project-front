@@ -1,45 +1,61 @@
 import Constants from "../../constants";
-import InventoryClient from "../../api";
+console.log("category reducer location")
 export default class CategoryReducer {
-  static actions = [Constants.ACTIONS.FIND_CATEGORY, Constants.ACTIONS.CREATE_CATEGORY, Constants.ACTIONS.UPDATE_CATEGORY, Constants.ACTIONS.LIST_CATEGORIES];
+  static actions = [
+    Constants.ACTIONS.CREATE_CATEGORY,
+    Constants.ACTIONS.UPDATE_CATEGORY,
+    Constants.ACTIONS.SELECT_CATEGORY,
+    Constants.ACTIONS.LIST_CATEGORIES
+  ];
   static isValidAction(action) {
     return CategoryReducer.actions.indexOf(action.type) >= 0;
   }
-  static async getResponse(res) {
-    if (res.error) {
-      throw res.error;
+  static createCategory(state, payload) {
+    if (!payload || !payload.id) return {};
+    const entityList = state["categories"] || [];
+    entityList.push(payload);
+    return { categories: entityList };
+  }
+  static updateCategory(state, payload) {
+    const entity = state["categories"].find(entity => entity.id === payload.id);
+    Object.assign(entity || {}, payload);
+    return state;
+  }
+  static selectCategory(state, payload) {
+    const [pluralKey, individualKey] = ["categories","category"]
+    if (typeof payload === "string") {
+      return {
+        [individualKey]:
+          (state[pluralKey] || []).find(entity => entity.id === payload) ||
+          {}
+      };
+    } else if (typeof payload === "object" && payload.id) {
+      const desiredEntity =
+        (state[pluralKey] || []).find(entity => entity.id === payload.id) ||
+        {};
+      Object.assign(desiredEntity, payload);
+      return { [individualKey]: desiredEntity, [pluralKey]: state[pluralKey] };
     }
-    else if (!(res.status >= 200 && res.status < 300)) {
-      throw res;
-    }
-    return res.response;
+    return { [individualKey]: {} };
   }
-  static async findCategory(payload) {
-    return { category: await InventoryClient.category.findCategory(payload).then(CategoryReducer.getResponse) };
+  static listCategories(state, payload) {
+    if (!payload || !payload.length) return { categories : [] };
+    return { categories: payload };
   }
-  static async createCategory(payload) {
-    return { category: await InventoryClient.category.createCategory(payload).then(CategoryReducer.getResponse) };
-  }
-  static async updateCategory(payload) {
-    return { category: await InventoryClient.category.updateCategory(payload.id, payload.category).then(CategoryReducer.getResponse) };
-  }
-  static async listCategories(payload) {
-    return { categories: await InventoryClient.category.listCategories(payload).then(CategoryReducer.getResponse) };
-  }
-  static async dispatch(action) {
+  static dispatch(state, action) {
     let newState = {};
     switch (action.type) {
-      case Constants.ACTIONS.FIND_CATEGORY:
-        newState = await CategoryReducer.findCategory(action.payload);
-        break;
       case Constants.ACTIONS.CREATE_CATEGORY:
-        newState = await CategoryReducer.createCategory(action.payload);
+        newState = CategoryReducer.createCategory(state, action.payload);
         break;
       case Constants.ACTIONS.UPDATE_CATEGORY:
-        newState = await CategoryReducer.updateCategory(action.payload);
+        newState = CategoryReducer.updateCategory(state, action.payload);
         break;
-      case Constants.ACTIONS.LIST_CATEGORY:
-        newState = await CategoryReducer.listCategories(action.payload);
+      case Constants.ACTIONS.SELECT_CATEGORY:
+        newState = CategoryReducer.selectCategory(state, action.payload);
+        break;
+      case Constants.ACTIONS.LIST_CATEGORIES:
+        newState = CategoryReducer.listCategories(state, action.payload);
         break;
       default:
         break;

@@ -1,15 +1,16 @@
 import Constants from "../../constants";
-export class SupplierAction {
-  static async findSupplier(payload) {
-    return { type: Constants.ACTIONS.FIND_SUPPLIER, payload };
-  }
-  static async createSupplier(payload) {
+console.log("supplier actions location")
+export default class SupplierAction {
+  static createSupplier(payload) {
     return { type: Constants.ACTIONS.CREATE_SUPPLIER, payload };
   }
-  static async updateSupplier(payload) {
+  static updateSupplier(payload) {
     return { type: Constants.ACTIONS.UPDATE_SUPPLIER, payload };
   }
-  static async listSuppliers(payload) {
-    return { type: Constants.ACTIONS.LIST_SUPPLIER_S, payload };
+  static selectSupplier(payload) {
+    return { type: Constants.ACTIONS.SELECT_SUPPLIER, payload };
+  }
+  static listSuppliers(payload) {
+    return { type: Constants.ACTIONS.LIST_SUPPLIERS, payload };
   }
 }
